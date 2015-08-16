@@ -54,13 +54,20 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:id="@+id/top_left_button"
-              />
+                android:background="@android:color/holo_green_dark"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:onClick="onLeftButtonClick"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/bottom_left_button"/>
+                android:id="@+id/bottom_left_button"
+                android:background="@android:color/holo_red_light"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:onClick="onBottomLeftButtonClick"/>
 
         </LinearLayout>
 
@@ -74,12 +81,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/top_right_button"/>
+                android:id="@+id/top_right_button"
+                android:background="@android:color/holo_orange_dark"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:onClick="onRightButton1Click"/>
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:id="@+id/bottom_right_button"/>
+                android:id="@+id/bottom_right_button"
+                android:background="@android:color/holo_blue_light"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:onClick="onBottomRightButtonClick"/>
 
         </LinearLayout>
 
