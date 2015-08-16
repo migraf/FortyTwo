@@ -16,8 +16,9 @@ import java.util.Random;
 public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
     TextView startNumber;
+
     //Todo: Count clicks for score and calculate score -> show highscore on top
-    int clicks, score;
+    int clicks, initNum, score;
 
     //Todo: implement game over for game loop -> switch screen with score (if == 42 -> screen with score, clicks and time left)
     boolean gameOver = false;
@@ -31,27 +32,28 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
+        initNum = createRandomStartNumber(100,300);
 
         //Sets random numbers to all the Buttons
         topLeftButton = (Button)findViewById(R.id.top_left_button);
-        topLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(1, 5, )));
+        topLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(1, 5, initNum)));
 
         bottomLeftButton = (Button)findViewById(R.id.bottom_left_button);
-        bottomLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(20, 50,)));
+        bottomLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(20, 50, initNum)));
 
         topRightButton = (Button)findViewById(R.id.top_right_button);
-        topRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(5, 20, )));
+        topRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(5, 20, initNum)));
 
         bottomRightButton = (Button)findViewById(R.id.bottom_right_button);
-        bottomRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(50, 100, ));
+        bottomRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(50, 100, initNum)));
 
         //set the random number to subtract from
         startNumber = (TextView) findViewById(R.id.initial_number);
-        startNumber.setText(String.valueOf(createRandomStartNumber(100, 300)));
+        startNumber.setText(String.valueOf(initNum));
 
     }
 
-    private static int createRandomStartNumber (int top, int bottom ){
+    private static int createRandomStartNumber (int top, int bottom){
         Random random = new Random();
         int range =  top - bottom +1;
         int randomNumber =(int) (range*random.nextDouble())+ bottom;
@@ -59,7 +61,7 @@ public class GameActivity extends Activity {
     }
 
     //Todo: Try to create only "good numbers" for the button (depending on startNumber)
-    private static int createRandomNumberInRangeButtons (int top, int bottom, int initialNumber){
+    private static int createRandomNumberInRangeButtons (int top, int bottom, int initNum){
         Random random = new Random();
 
         int range =  top - bottom +1;
