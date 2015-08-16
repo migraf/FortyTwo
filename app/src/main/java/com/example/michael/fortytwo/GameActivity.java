@@ -40,13 +40,18 @@ public class GameActivity extends Activity {
 
     }
 
-    private static int createRandomNumber (int range ){
+    private static int createRandomNumberSmall (int range ){
 
         Random random = new Random();
 
         return random.nextInt(range);
 
+    }
+    private static int createRandomNumber (int range ){
 
+        Random random = new Random();
+
+        return random.nextInt(range);
 
     }
 
