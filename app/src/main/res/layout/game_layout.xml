@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight="2"
-    >
+    android:layout_weight="2">
+
+    <!-- Todo: use a better design for game screen -->
+
+    <!-- Todo: Change colors of buttons onload -->
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -30,8 +34,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp" />
-
-
     </RelativeLayout>
 
     <LinearLayout

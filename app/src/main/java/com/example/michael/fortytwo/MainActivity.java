@@ -40,5 +40,12 @@ public class MainActivity extends Activity {
     public void onStartGameClick(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+
+    }
+
+    public void onSettingsClick(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
     }
 }
