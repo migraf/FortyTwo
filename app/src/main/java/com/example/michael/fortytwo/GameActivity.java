@@ -18,6 +18,8 @@ public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
     TextView startNumber, countdownTimer;
 
+    final int FORTYTWO = 42;
+
     //Todo: Count clicks for score and calculate score -> show highscore on top
     int clicks, initNum, score;
 
@@ -38,6 +40,7 @@ public class GameActivity extends Activity {
         initNum = createRandomStartNumber(100,300);
 
         final Intent scoreIntent =  new Intent(this, ScoreActivity.class);
+        scoreIntent.putExtra("Score", 0);
 
 
 
@@ -62,7 +65,7 @@ public class GameActivity extends Activity {
         countdownTimer = (TextView) findViewById(R.id.countdown_timer);
 
 
-        new CountDownTimer(10000,100) {
+         new CountDownTimer(10000,100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 countdownTimer.setText(String.valueOf(millisUntilFinished/1000));
@@ -121,14 +124,32 @@ public class GameActivity extends Activity {
         clicks++;
     }
 
-    public void subtractButtonValue(TextView number, Button button){
+    private void subtractButtonValue(TextView number, Button button){
+        Intent scoreIntent =  new Intent(this, ScoreActivity.class);
+        scoreIntent.putExtra("Score", calculateScore(countdownTimer,clicks));
         int buttonValue = Integer.parseInt((String) button.getText());
         int textValue = Integer.parseInt((String) number.getText());
         int newValue =  textValue-buttonValue;
 
+        if(newValue < FORTYTWO){
+           startActivity(scoreIntent);
+
+
+        }
+
         number.setText(String.valueOf(newValue));
 
     }
+    private int calculateScore(TextView time, int clicks){
+
+        int timeValue = Integer.parseInt((String) time.getText());
+
+        int score  = (42*timeValue) - clicks;
+
+       return score;
+
+    }
+
 
 
 }
