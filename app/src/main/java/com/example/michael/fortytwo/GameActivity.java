@@ -3,6 +3,7 @@ package com.example.michael.fortytwo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,13 +16,15 @@ import java.util.Random;
 
 public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
-    TextView startNumber;
+    TextView startNumber, countdownTimer;
 
     //Todo: Count clicks for score and calculate score -> show highscore on top
     int clicks, initNum, score;
 
+
+
     //Todo: implement game over for game loop -> switch screen with score (if == 42 -> screen with score, clicks and time left)
-    boolean gameOver = false;
+
 
     //Todo: implement the countdown with integers from 10 to 0 (game over)
 
@@ -33,6 +36,10 @@ public class GameActivity extends Activity {
         setContentView(R.layout.game_layout);
 
         initNum = createRandomStartNumber(100,300);
+
+        final Intent scoreIntent =  new Intent(this, ScoreActivity.class);
+
+
 
         //Sets random numbers to all the Buttons
         topLeftButton = (Button)findViewById(R.id.top_left_button);
@@ -50,6 +57,26 @@ public class GameActivity extends Activity {
         //set the random number to subtract from
         startNumber = (TextView) findViewById(R.id.initial_number);
         startNumber.setText(String.valueOf(initNum));
+
+
+        countdownTimer = (TextView) findViewById(R.id.countdown_timer);
+
+
+        new CountDownTimer(10000,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countdownTimer.setText(String.valueOf(millisUntilFinished/1000));
+
+            }
+
+            @Override
+            public void onFinish() {
+                startActivity(scoreIntent);
+
+
+
+            }
+        }.start();
 
     }
 
@@ -69,6 +96,8 @@ public class GameActivity extends Activity {
 
         return randomNumber;
     }
+
+    //On Click methods for all the Buttons
 
 
     public void onLeftButtonClick(View view) {
@@ -100,4 +129,6 @@ public class GameActivity extends Activity {
         number.setText(String.valueOf(newValue));
 
     }
+
+
 }
