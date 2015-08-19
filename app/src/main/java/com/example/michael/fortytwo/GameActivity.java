@@ -145,10 +145,9 @@ public class GameActivity extends Activity {
 
     private int calculateScore(TextView time, int clicks){
         int timeValue = Integer.parseInt((String) time.getText());
+        int calcScore  = (42*timeValue) - clicks;
 
-        int score  = (42*timeValue) - clicks;
-
-       return score;
+       return calcScore;
     }
 
     private void fillArrayWithRandomNumbers(int [] arr){
@@ -159,7 +158,7 @@ public class GameActivity extends Activity {
     }
 
     private void calculateFittingNumbers(int [] arr, int startNumber){
-        int restNumber = startNumber -FORTYTWO;
+        int restNumber = startNumber - FORTYTWO;
         int num;
 
         for (int i = 0; i<arr.length; i++){
