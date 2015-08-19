@@ -41,8 +41,8 @@ public class GameActivity extends Activity {
 
         initNum = createRandomStartNumber(100,300);
 
-        final Intent scoreIntent =  new Intent(this, ScoreActivity.class);
-        scoreIntent.putExtra("Score", 0);
+        final Intent gameOverIntent =  new Intent(this, GameOverActivity.class);
+        gameOverIntent.putExtra("Score", 0);
         fillArrayWithRandomNumbers(randomNumbers);
         calculateFittingNumbers(randomNumbers, initNum);
 
@@ -78,7 +78,7 @@ public class GameActivity extends Activity {
 
             @Override
             public void onFinish() {
-                startActivity(scoreIntent);
+                startActivity(gameOverIntent);
 
 
 
@@ -129,16 +129,23 @@ public class GameActivity extends Activity {
     }
 
     private void subtractButtonValue(TextView number, Button button){
-        Intent scoreIntent =  new Intent(this, ScoreActivity.class);
+        Intent gameOverIntent =  new Intent(this, GameOverActivity.class);
+        gameOverIntent.putExtra("Score", 0);
+
+        Intent scoreIntent = new Intent(this, ScoreActivity.class);
         scoreIntent.putExtra("Score", calculateScore(countdownTimer,clicks));
+
         int buttonValue = Integer.parseInt((String) button.getText());
         int textValue = Integer.parseInt((String) number.getText());
         int newValue =  textValue-buttonValue;
 
         if(newValue < FORTYTWO){
-           startActivity(scoreIntent);
+            startActivity(gameOverIntent);
             timer.cancel();
-
+        }
+        else if(newValue == FORTYTWO){
+            startActivity(scoreIntent);
+            timer.cancel();
         }
 
         number.setText(String.valueOf(newValue));
