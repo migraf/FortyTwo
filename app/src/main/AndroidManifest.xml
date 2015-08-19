@@ -23,9 +23,13 @@
             android:name=".GameActivity"
             android:label="FortyTwo">
         </activity>
-        <activity android:name=".ScoreActivity"
+        <activity
+            android:name=".ScoreActivity"
             android:label="FortyTwo">
-
+        </activity>
+        <activity
+            android:name=".GameOverActivity"
+            android:label="FortyTwo">
         </activity>
     </application>
 

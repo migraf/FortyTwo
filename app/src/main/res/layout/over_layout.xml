@@ -9,19 +9,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Score: "
         android:id="@+id/current_score"
+        android:layout_marginTop="234dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next Game!"
+        android:text="Play Again!"
         android:id="@+id/play_again_button"
+        android:layout_marginBottom="63dp"
+        android:onClick="onPlayAgainButtonClick"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:onClick="onPlayAgainButtonClick"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,5 +32,15 @@
         android:layout_below="@+id/current_score"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Game Over!"
+        android:id="@+id/textView"
+        android:layout_marginBottom="75dp"
+        android:layout_alignBottom="@+id/current_score"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
