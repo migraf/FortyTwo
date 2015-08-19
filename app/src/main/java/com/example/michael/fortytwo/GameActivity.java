@@ -20,6 +20,15 @@ public class GameActivity extends Activity {
     CountDownTimer timer;
     Intent gameOverIntent;
     int [] randomNumbers =  new int[4];
+    private int totalScore;
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
 
     final int FORTYTWO = 42;
 
@@ -114,7 +123,8 @@ public class GameActivity extends Activity {
         gameOverIntent.putExtra("Score", 0);
 
         Intent scoreIntent = new Intent(this, ScoreActivity.class);
-        scoreIntent.putExtra("Score", calculateScore(countdownTimer,clicks));
+        int score = calculateScore(countdownTimer,clicks);
+        scoreIntent.putExtra("Score",score);
 
         int buttonValue = Integer.parseInt((String) button.getText());
         int textValue = Integer.parseInt((String) number.getText());
@@ -127,6 +137,7 @@ public class GameActivity extends Activity {
         else if(newValue == FORTYTWO){
             startActivity(scoreIntent);
             timer.cancel();
+            totalScore+= score;
         }
 
         number.setText(String.valueOf(newValue));
@@ -141,7 +152,7 @@ public class GameActivity extends Activity {
     }
 
     private void fillArrayWithRandomNumbers(int [] arr){
-        arr[3] = createRandomStartNumber(1,1);
+        arr[3] = createRandomStartNumber(1,5);
         arr[2] = createRandomStartNumber(5,10);
         arr[1] = createRandomStartNumber(10,50);
         arr[0] = createRandomStartNumber(50,100);
