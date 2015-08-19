@@ -17,6 +17,7 @@ import java.util.Random;
 public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
     TextView startNumber, countdownTimer;
+    CountDownTimer timer;
 
     final int FORTYTWO = 42;
 
@@ -65,7 +66,7 @@ public class GameActivity extends Activity {
         countdownTimer = (TextView) findViewById(R.id.countdown_timer);
 
 
-         new CountDownTimer(10000,100) {
+         timer = new CountDownTimer(10000,100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 countdownTimer.setText(String.valueOf(millisUntilFinished/1000));
@@ -80,6 +81,8 @@ public class GameActivity extends Activity {
 
             }
         }.start();
+
+
 
     }
 
@@ -124,6 +127,13 @@ public class GameActivity extends Activity {
         clicks++;
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
+
     private void subtractButtonValue(TextView number, Button button){
         Intent scoreIntent =  new Intent(this, ScoreActivity.class);
         scoreIntent.putExtra("Score", calculateScore(countdownTimer,clicks));
@@ -133,6 +143,8 @@ public class GameActivity extends Activity {
 
         if(newValue < FORTYTWO){
            startActivity(scoreIntent);
+            timer.cancel();
+
 
 
         }
