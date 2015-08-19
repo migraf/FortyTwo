@@ -18,6 +18,7 @@ public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
     TextView startNumber, countdownTimer;
     CountDownTimer timer;
+    Intent gameOverIntent;
     int [] randomNumbers =  new int[4];
 
     final int FORTYTWO = 42;
@@ -30,7 +31,7 @@ public class GameActivity extends Activity {
     //Todo: implement game over for game loop -> switch screen with score (if == 42 -> screen with score, clicks and time left)
 
 
-    //Todo: implement the countdown with integers from 10 to 0 (game over)
+
 
 
     @Override
@@ -41,7 +42,7 @@ public class GameActivity extends Activity {
 
         initNum = createRandomStartNumber(100,300);
 
-        final Intent gameOverIntent =  new Intent(this, GameOverActivity.class);
+        gameOverIntent =  new Intent(this, GameOverActivity.class);
         gameOverIntent.putExtra("Score", 0);
         fillArrayWithRandomNumbers(randomNumbers);
         calculateFittingNumbers(randomNumbers, initNum);
@@ -129,7 +130,6 @@ public class GameActivity extends Activity {
     }
 
     private void subtractButtonValue(TextView number, Button button){
-        Intent gameOverIntent =  new Intent(this, GameOverActivity.class);
         gameOverIntent.putExtra("Score", 0);
 
         Intent scoreIntent = new Intent(this, ScoreActivity.class);
