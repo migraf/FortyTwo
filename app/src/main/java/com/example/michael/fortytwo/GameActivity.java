@@ -18,6 +18,7 @@ public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
     TextView startNumber, countdownTimer;
     CountDownTimer timer;
+    int [] randomNumbers =  new int[4];
 
     final int FORTYTWO = 42;
 
@@ -42,21 +43,23 @@ public class GameActivity extends Activity {
 
         final Intent scoreIntent =  new Intent(this, ScoreActivity.class);
         scoreIntent.putExtra("Score", 0);
+        fillArrayWithRandomNumbers(randomNumbers);
+        calculateFittingNumbers(randomNumbers, initNum);
 
 
 
         //Sets random numbers to all the Buttons
         topLeftButton = (Button)findViewById(R.id.top_left_button);
-        topLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(1, 5, initNum)));
+        topLeftButton.setText(String.valueOf(randomNumbers[3]));
 
         bottomLeftButton = (Button)findViewById(R.id.bottom_left_button);
-        bottomLeftButton.setText(String.valueOf(createRandomNumberInRangeButtons(20, 50, initNum)));
+        bottomLeftButton.setText(String.valueOf(randomNumbers[1]));
 
         topRightButton = (Button)findViewById(R.id.top_right_button);
-        topRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(5, 20, initNum)));
+        topRightButton.setText(String.valueOf(randomNumbers[2]));
 
         bottomRightButton = (Button)findViewById(R.id.bottom_right_button);
-        bottomRightButton.setText(String.valueOf(createRandomNumberInRangeButtons(50, 100, initNum)));
+        bottomRightButton.setText(String.valueOf(randomNumbers[0]));
 
         //set the random number to subtract from
         startNumber = (TextView) findViewById(R.id.initial_number);
@@ -93,15 +96,6 @@ public class GameActivity extends Activity {
         return randomNumber;
     }
 
-    //Todo: Try to create only "good numbers" for the button (depending on startNumber)
-    private static int createRandomNumberInRangeButtons (int top, int bottom, int initNum){
-        Random random = new Random();
-
-        int range =  top - bottom +1;
-        int randomNumber =(int) (range*random.nextDouble())+ bottom;
-
-        return randomNumber;
-    }
 
     //On Click methods for all the Buttons
 
@@ -123,7 +117,7 @@ public class GameActivity extends Activity {
     }
 
     public void onBottomRightButtonClick(View view) {
-        subtractButtonValue(startNumber,bottomRightButton);
+        subtractButtonValue(startNumber, bottomRightButton);
         clicks++;
     }
 
@@ -135,34 +129,55 @@ public class GameActivity extends Activity {
     }
 
     private void subtractButtonValue(TextView number, Button button){
-        Intent gameOverIntent =  new Intent(this, GameOverActivity.class);
-        gameOverIntent.putExtra("Score", 0);
-
-        Intent scoreIntent = new Intent(this, ScoreActivity.class);
+        Intent scoreIntent =  new Intent(this, ScoreActivity.class);
         scoreIntent.putExtra("Score", calculateScore(countdownTimer,clicks));
-
         int buttonValue = Integer.parseInt((String) button.getText());
         int textValue = Integer.parseInt((String) number.getText());
         int newValue =  textValue-buttonValue;
 
         if(newValue < FORTYTWO){
-           startActivity(gameOverIntent);
+           startActivity(scoreIntent);
             timer.cancel();
-        }
-        else if(newValue == FORTYTWO){
-            startActivity(scoreIntent);
-            timer.cancel();
+
         }
 
         number.setText(String.valueOf(newValue));
 
     }
     private int calculateScore(TextView time, int clicks){
+
         int timeValue = Integer.parseInt((String) time.getText());
+
         int score  = (42*timeValue) - clicks;
 
        return score;
 
+
+    }
+
+    private void fillArrayWithRandomNumbers(int [] arr){
+        arr[3] = createRandomStartNumber(1,1);
+        arr[2] = createRandomStartNumber(5,10);
+        arr[1] = createRandomStartNumber(10,50);
+        arr[0] = createRandomStartNumber(50,100);
+
+    }
+
+    private void calculateFittingNumbers(int [] arr, int startNumber){
+        int restNumber = startNumber -FORTYTWO;
+        int num;
+
+        for (int i = 0; i<arr.length; i++){
+            if(arr[i] < restNumber){
+                num = restNumber/arr[i];
+                restNumber -= num*arr[i];
+            }
+        }
+
+        if(restNumber != 0){
+            fillArrayWithRandomNumbers(randomNumbers);
+            calculateFittingNumbers(arr, startNumber);
+        }
     }
 
 
