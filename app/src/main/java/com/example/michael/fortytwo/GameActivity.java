@@ -26,14 +26,6 @@ public class GameActivity extends Activity {
     //Todo: Count clicks for score and calculate score -> show highscore on top
     int clicks, initNum, score;
 
-
-
-    //Todo: implement game over for game loop -> switch screen with score (if == 42 -> screen with score, clicks and time left)
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -44,6 +36,7 @@ public class GameActivity extends Activity {
 
         gameOverIntent =  new Intent(this, GameOverActivity.class);
         gameOverIntent.putExtra("Score", 0);
+
         fillArrayWithRandomNumbers(randomNumbers);
         calculateFittingNumbers(randomNumbers, initNum);
 
@@ -74,20 +67,13 @@ public class GameActivity extends Activity {
             @Override
             public void onTick(long millisUntilFinished) {
                 countdownTimer.setText(String.valueOf(millisUntilFinished/1000));
-
             }
 
             @Override
             public void onFinish() {
                 startActivity(gameOverIntent);
-
-
-
             }
         }.start();
-
-
-
     }
 
     private static int createRandomStartNumber (int top, int bottom){
@@ -97,10 +83,7 @@ public class GameActivity extends Activity {
         return randomNumber;
     }
 
-
     //On Click methods for all the Buttons
-
-
     public void onLeftButtonClick(View view) {
         subtractButtonValue(startNumber,topLeftButton);
         clicks++;
@@ -111,7 +94,6 @@ public class GameActivity extends Activity {
         clicks++;
     }
 
-
     public void onBottomLeftButtonClick(View view) {
         subtractButtonValue(startNumber,bottomLeftButton);
         clicks++;
@@ -121,7 +103,6 @@ public class GameActivity extends Activity {
         subtractButtonValue(startNumber, bottomRightButton);
         clicks++;
     }
-
 
     @Override
     protected void onPause() {
@@ -149,17 +130,14 @@ public class GameActivity extends Activity {
         }
 
         number.setText(String.valueOf(newValue));
-
     }
-    private int calculateScore(TextView time, int clicks){
 
+    private int calculateScore(TextView time, int clicks){
         int timeValue = Integer.parseInt((String) time.getText());
 
         int score  = (42*timeValue) - clicks;
 
        return score;
-
-
     }
 
     private void fillArrayWithRandomNumbers(int [] arr){
@@ -167,7 +145,6 @@ public class GameActivity extends Activity {
         arr[2] = createRandomStartNumber(5,10);
         arr[1] = createRandomStartNumber(10,50);
         arr[0] = createRandomStartNumber(50,100);
-
     }
 
     private void calculateFittingNumbers(int [] arr, int startNumber){
@@ -180,13 +157,9 @@ public class GameActivity extends Activity {
                 restNumber -= num*arr[i];
             }
         }
-
         if(restNumber != 0){
             fillArrayWithRandomNumbers(randomNumbers);
             calculateFittingNumbers(arr, startNumber);
         }
     }
-
-
-
 }
