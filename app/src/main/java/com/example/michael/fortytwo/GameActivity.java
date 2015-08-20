@@ -41,6 +41,8 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
+        //Number from which you have to subtract.
+
         initNum = createRandomStartNumber(100,300);
 
         gameOverIntent =  new Intent(this, GameOverActivity.class);
@@ -85,6 +87,11 @@ public class GameActivity extends Activity {
         }.start();
     }
 
+    /** Creates a random integer in range
+     * @param top the highest number possible
+     * @param bottom lowest number possible
+     * @return
+     */
     private static int createRandomStartNumber (int top, int bottom){
         Random random = new Random();
         int range =  top - bottom +1;
@@ -119,6 +126,10 @@ public class GameActivity extends Activity {
         timer.cancel();
     }
 
+    /** Subtracts the Value of a button, from the targetnumber also checks if the game is won or lost
+     * @param number
+     * @param button
+     */
     private void subtractButtonValue(TextView number, Button button){
         gameOverIntent.putExtra("Score", 0);
 
@@ -143,6 +154,11 @@ public class GameActivity extends Activity {
         number.setText(String.valueOf(newValue));
     }
 
+    /**Calculates the score
+     * @param time
+     * @param clicks
+     * @return
+     */
     private int calculateScore(TextView time, int clicks){
         int timeValue = Integer.parseInt((String) time.getText());
 
@@ -151,13 +167,19 @@ public class GameActivity extends Activity {
        return score;
     }
 
+
     private void fillArrayWithRandomNumbers(int [] arr){
-        arr[3] = createRandomStartNumber(1,5);
+        arr[3] = createRandomStartNumber(2,5);
         arr[2] = createRandomStartNumber(5,10);
         arr[1] = createRandomStartNumber(10,50);
         arr[0] = createRandomStartNumber(50,100);
     }
 
+    /** Greedy algorithm that checks if a combination of the numbers in the buttons,
+     * can create the target value - 42, if not reassign the numbers
+     * @param arr
+     * @param startNumber
+     */
     private void calculateFittingNumbers(int [] arr, int startNumber){
         int restNumber = startNumber -FORTYTWO;
         int num;
