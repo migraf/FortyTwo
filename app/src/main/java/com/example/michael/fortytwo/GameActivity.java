@@ -2,6 +2,7 @@ package com.example.michael.fortytwo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -16,19 +17,12 @@ import java.util.Random;
 
 public class GameActivity extends Activity {
     Button topLeftButton,bottomLeftButton,topRightButton,bottomRightButton;
-    TextView startNumber, countdownTimer;
+    TextView startNumber, countdownTimer, highscore;
     CountDownTimer timer;
     Intent gameOverIntent;
     int [] randomNumbers =  new int[4];
     private int totalScore;
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
-    }
+    SharedPreferences.Editor editor;
 
     final int FORTYTWO = 42;
 
@@ -37,6 +31,12 @@ public class GameActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        totalScore = getPreferences(MODE_PRIVATE).getInt("highscore", 0);
+
+
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
@@ -70,8 +70,22 @@ public class GameActivity extends Activity {
         startNumber = (TextView) findViewById(R.id.initial_number);
         startNumber.setText(String.valueOf(initNum));
 
+        highscore = (TextView) findViewById(R.id.highscore);
+        highscore.append(String.valueOf(totalScore));
+
 
         countdownTimer = (TextView) findViewById(R.id.countdown_timer);
+
+
+        //Shared Preferences Stuff TODO: get it to work
+
+        editor = getPreferences(MODE_PRIVATE).edit();
+
+
+
+
+
+
 
 
          timer = new CountDownTimer(10000,100) {
@@ -111,7 +125,7 @@ public class GameActivity extends Activity {
     }
 
     public void onBottomLeftButtonClick(View view) {
-        subtractButtonValue(startNumber,bottomLeftButton);
+        subtractButtonValue(startNumber, bottomLeftButton);
         clicks++;
     }
 
@@ -133,22 +147,30 @@ public class GameActivity extends Activity {
     private void subtractButtonValue(TextView number, Button button){
         gameOverIntent.putExtra("Score", 0);
 
-        Intent scoreIntent = new Intent(this, ScoreActivity.class);
-        int score = calculateScore(countdownTimer,clicks);
-        scoreIntent.putExtra("Score",score);
+
 
         int buttonValue = Integer.parseInt((String) button.getText());
         int textValue = Integer.parseInt((String) number.getText());
         int newValue =  textValue-buttonValue;
 
         if(newValue < FORTYTWO){
+            gameOverIntent.putExtra("highscore", totalScore);
             startActivity(gameOverIntent);
             timer.cancel();
+            getPreferences(MODE_PRIVATE).edit().putInt("highscore", 0).commit();
         }
         else if(newValue == FORTYTWO){
+            Intent scoreIntent = new Intent(this, ScoreActivity.class);
+            int oldScore = getPreferences(MODE_PRIVATE).getInt("highscore", 0);
+            int score = calculateScore(countdownTimer,clicks) + oldScore ;
+            scoreIntent.putExtra("Score",score);
+
+
+            editor.putInt("highscore", score).commit();
+
+
             startActivity(scoreIntent);
             timer.cancel();
-            totalScore+= score;
         }
 
         number.setText(String.valueOf(newValue));

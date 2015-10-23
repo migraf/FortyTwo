@@ -2,6 +2,7 @@ package com.example.michael.fortytwo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -24,9 +25,16 @@ public class ScoreActivity extends Activity {
         int currentScore = (int) scorePassed.getSerializableExtra("Score");
         curScore.append(String.valueOf(currentScore));
 
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        editor.putInt("highestScore", 0);
+
+        int highestScore = getPreferences(MODE_PRIVATE).getInt("highestScore", 0);
+
+
+
         TextView totalScore = (TextView) findViewById(R.id.total_score);
         totalScoreNumber =  currentScore + totalScoreNumber;
-        totalScore.append(String.valueOf(totalScoreNumber));
+        totalScore.append(String.valueOf(currentScore));
 
     }
 

@@ -25,7 +25,7 @@ public class GameOverActivity extends Activity {
         curScore.append(String.valueOf(currentScore));
 
         TextView totalScore = (TextView) findViewById(R.id.total_score);
-        totalScoreNumber =  currentScore + totalScoreNumber;
+        totalScoreNumber =  (int) scorePassed.getSerializableExtra("highscore");
         totalScore.append(String.valueOf(totalScoreNumber));
         }
 
